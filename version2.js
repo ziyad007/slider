@@ -46,7 +46,7 @@ right.addEventListener("click",function()
     if(index + 1 == slide.length){
       slide[0].classList.remove("animated" ,"fadeInRight");
     }else {
-      //index += 1;
+
       slide[index+1].classList.remove("animated" ,"fadeInRight");
     }
 
@@ -78,20 +78,13 @@ function slide_2_animation_left()
     slide[index].addEventListener("animationend",slide_2_animation_end_left);
     slide[index+1].removeEventListener("animationend",slide_2_animation_left);
   }
-  // slide[1].classList.remove("hidden");
-  // slide[1].classList.add("animated","fadeInLeft");
-  //
-  // slide[1].addEventListener("animationend",slide_2_animation_end_left);
-  // slide[2].removeEventListener("animationend",slide_2_animation_left);
+
 }
 function slide_2_animation_end_left()
 {
     slide[index].classList.remove("animated","fadeInLeft");
     slide[index].removeEventListener("animationend",slide_2_animation_end_left);
 }
-
-
-
 
 left.addEventListener("click",function()
 {
@@ -101,9 +94,6 @@ left.addEventListener("click",function()
   if(index == 0){
     slide[slide.length -1].classList.remove("animated" ,"fadeInRight");
   }else {
-    //index += 1;
     slide[index-1].classList.remove("animated" ,"fadeInRight");
   }
-
-
 });
