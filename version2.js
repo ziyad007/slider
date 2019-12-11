@@ -2,13 +2,13 @@ let right=document.getElementById('right');
 let left=document.getElementById('left');
 let slide=document.getElementsByClassName('slide');
 var index=0;
-slide=Array.from(slide); // fct qui change un node en tableau
+slide=Array.from(slide);
 
 function slide_animation_right()
 {
   /*
-  this function fade out left  slide[0];
-  and fade in sile[1]
+  this function fade out left  a curent slide and fade in right a next slide;
+
   */
   slide[index].classList.add("hidden");
   slide[index].classList.remove("animated" ,"fadeOutLeft");
@@ -56,22 +56,38 @@ right.addEventListener("click",function()
 function slide_2_animation_left()
 {
   /*
-  this function fade out right slide [2]
-  and fade in left slide[1]
+  this function fade out right a curent slide and fade in left the next slide
   */
-  slide[2].classList.remove("animated","fadeOutRight");
-  slide[2].classList.add("hidden");
+  slide[index].classList.remove("animated","fadeOutRight");
+  slide[index].classList.add("hidden");
 
-  slide[1].classList.remove("hidden");
-  slide[1].classList.add("animated","fadeInLeft");
+  if (index == 0)
+  {
+    index=slide.length-1;
+    slide[index].classList.remove("hidden");
+    slide[index].classList.add("animated","fadeInLeft");
 
-  slide[1].addEventListener("animationend",slide_2_animation_end_left);
-  slide[2].removeEventListener("animationend",slide_2_animation_left);
+    slide[index].addEventListener("animationend",slide_2_animation_end_left);
+    slide[0].removeEventListener("animationend",slide_2_animation_left);
+  }
+  else {
+    index=index-1;
+    slide[index].classList.remove("hidden");
+    slide[index].classList.add("animated","fadeInLeft");
+
+    slide[index].addEventListener("animationend",slide_2_animation_end_left);
+    slide[index+1].removeEventListener("animationend",slide_2_animation_left);
+  }
+  // slide[1].classList.remove("hidden");
+  // slide[1].classList.add("animated","fadeInLeft");
+  //
+  // slide[1].addEventListener("animationend",slide_2_animation_end_left);
+  // slide[2].removeEventListener("animationend",slide_2_animation_left);
 }
 function slide_2_animation_end_left()
 {
-    slide[1].classList.remove("animated","fadeInLeft");
-    slide[1].removeEventListener("animationend",slide_2_animation_end_left);
+    slide[index].classList.remove("animated","fadeInLeft");
+    slide[index].removeEventListener("animationend",slide_2_animation_end_left);
 }
 
 
@@ -80,20 +96,14 @@ function slide_2_animation_end_left()
 left.addEventListener("click",function()
 {
 
-  if (index==2)
-  {
-    slide[2].classList.add("animated","fadeOutRight");
-    slide[2].addEventListener("animationend",slide_2_animation_left);
-    index=1;
+  slide[index].classList.add("animated","fadeOutRight");
+  slide[index].addEventListener("animationend",slide_2_animation_left);
+  if(index == 0){
+    slide[slide.length -1].classList.remove("animated" ,"fadeInRight");
+  }else {
+    //index += 1;
+    slide[index-1].classList.remove("animated" ,"fadeInRight");
   }
-  else
-  {
-    if (index==1) {
-      slide[1].classList.add("animated","fadeOutRight");
-      slide[1].addEventListener("animationend",slide_1_animation_left);
 
-     index=0;
-   }
-  }
 
 });
